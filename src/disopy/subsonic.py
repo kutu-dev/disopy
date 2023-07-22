@@ -28,7 +28,7 @@ class Subsonic:
             "s": self.auth.salt,
             "v": "1.15.0",
             # Client name
-            "c": "Subrift",
+            "c": "Disopy",
         }
 
         self.info: Callable[[str], None] = lambda message: info(
