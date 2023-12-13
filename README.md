@@ -17,11 +17,11 @@ The cofig file is located in `$XDG_CONFIG_PATH/disopy/disopy.json`, in most case
 
 ```json
 {
-  "subsonic": {
-    "subsonicUrl": "https://",
+  "user": {
     "username": "",
     "password": ""
   },
+  "subsonicUrl": "https://",
   "discordToken": "",
   "caCertsPath": ""
 }
