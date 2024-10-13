@@ -11,6 +11,8 @@ requires-python = ">= 3.13.0"
 dependencies = [
   "knuckles>=1.1.0",
   "hikari>=2.1.0",
+  "platformdirs>=4.3.6",
+  "colorama>=0.4.6",
 ]
 
 authors = [
@@ -41,16 +43,14 @@ path = "src/disopy/__init__.py"
 dependencies = [
   "mypy",
   "ruff",
+  "types-colorama",
 ]
+
+[tool.ruff]
+line-length = 120
 
 [tool.ruff.lint]
 select = ["E", "F", "I001"]
 
 [tool.mypy]
 strict = true
-
-[tool.pylsp-mypy]
-enabled = true
-live_mode = true
-strict = true
-exclude = ["tests/*"]
