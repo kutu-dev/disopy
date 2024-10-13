@@ -14,7 +14,8 @@ run:
 # Fix formatting and linting issues
 check:
   addlicense -l mpl .
-  nix fmt
+  # Run the flake formatting if the `nix` CLI is available
+  command -v nix && nix fmt
   # TODO: May be changed in the future
   hatch env run -- mypy -p disopy
   hatch env run -- ruff check --fix
