@@ -1,0 +1,56 @@
+[project]
+# TODO: May be changed in the future
+name = "disopy"
+# TODO: Add description
+description = ""
+readme = "README.md"
+
+dynamic = ["version"]
+
+requires-python = ">= 3.13.0"
+dependencies = [
+  "knuckles>=1.1.0",
+  "hikari>=2.1.0",
+]
+
+authors = [
+  {name = 'Jorge "Kutu" Dobón Blanco', email="code@dobon.dev"}
+]
+
+[project.scripts]
+# TODO: May be changed in the future
+disopy = "disopy.__main__:main"
+
+[project.urls]
+# TODO: May be changed in the future
+Repository = "https://github.com/kutu-dev/disopy"
+# TODO: May be changed in the future
+Issues = "https://github.com/kutu-dev/disopy/issues"
+# TODO: May be changed in the future
+Changelog = "https://github.com/kutu-dev/disopy/blob/master/CHANGELOG.md"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+# TODO: May be changed in the future
+path = "src/disopy/__init__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "mypy",
+  "ruff",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I001"]
+
+[tool.mypy]
+strict = true
+
+[tool.pylsp-mypy]
+enabled = true
+live_mode = true
+strict = true
+exclude = ["tests/*"]

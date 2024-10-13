@@ -12,3 +12,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - The project is now licensed under the [MPL 2.0](https://www.mozilla.org/en-US/MPL/) license instead of the [MIT](https://opensource.org/license/MIT) license.
+- The project now uses the [Hatch](https://hatch.pypa.io/latest/) Python project manager.

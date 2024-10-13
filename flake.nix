@@ -26,10 +26,20 @@
       default = pkgs.mkShell {
         # TODO: Maybe change its name
         name = "disopy";
-        nativeBuildInputs = with pkgs; [
+
+        shellHook = ''
+          export PIP_NO_BINARY="ruff"
+        '';
+
+        packages = with pkgs; [
           addlicense
           just
           ripgrep
+          hatch
+          python313
+
+          rustc
+          cargo
         ];
       };
     });
