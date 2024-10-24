@@ -9,7 +9,7 @@ setup:
 # Run the project
 run:
   # TODO: May be changed in the future
-  hatch env run -- disopy
+  hatch env run -- disopy -d -c ./dev/config
 
 # Fix formatting and linting issues
 check:

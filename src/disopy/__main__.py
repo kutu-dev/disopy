@@ -4,23 +4,29 @@
 
 import logging
 
-import hikari
-import knuckles
-import platformdirs
-
-from . import APP_NAME
+from .config import get_config, generate_new_config
 from .logging import setup_logging
+from .options import get_options
+
+logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    setup_logging(True)
+    """The entry point of the program."""
 
-    logger = logging.getLogger(__name__)
-    logger.debug(hikari)
-    logger.info(hikari)
-    logger.warning(knuckles)
-    logger.error(platformdirs.user_config_dir(APP_NAME))
-    logger.critical(platformdirs.user_config_dir(APP_NAME))
+    options = get_options()
+
+    setup_logging(options.debug, options.color)
+
+    if options.generate_config:
+        generate_new_config(options.config_path)
+        return
+
+    config = get_config(options.config_path)
+    if config is None:
+        return
+
+    print(config)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,10 @@
+# Disopy config file
+
+# DO NOT MODIFY ME! Internal config file version
+version = 1
+
+[subsonic]
+# The URL where the OpenSubsonic REST API can be accessed
+url = "http://example.com"
+# The user to be use when authenticating in the OpenSubsonic server
+user = "Alice"

@@ -3,12 +3,9 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 import logging
-import os
 from typing import Final
 
 from colorama import Fore, Style
-
-from . import APP_NAME
 
 # The relation between the logging level number and its prefix text and color
 LOG_PREFIX: Final[dict[int, tuple[str, str]]] = {
@@ -20,14 +17,17 @@ LOG_PREFIX: Final[dict[int, tuple[str, str]]] = {
 }
 
 
-# If the color should be disabled
-COLOR_DISABLED: Final[bool] = (
-    "NO_COLOR" in os.environ or f"{APP_NAME.upper()}_NO_COLOR" in os.environ or os.environ.get("TERM", "") == "dumb"
-)
-
-
 class ColoredFormatter(logging.Formatter):
-    """A custom formatter that takes care of coloring the output following the [CLIG](https://clig.dev/)."""
+    """A custom formatter that takes care of coloring the output, following the [CLIG](https://clig.dev/)."""
+
+    def __init__(self, color: bool) -> None:
+        """Constructor for the formatter.
+
+        Args:
+            color: If the output should be formatted.
+        """
+
+        self.color = color
 
     def format(self, record: logging.LogRecord) -> str:
         """Format the record taking care of output coloring.
@@ -43,7 +43,7 @@ class ColoredFormatter(logging.Formatter):
 
         formatter = logging.Formatter(
             (
-                f"%(asctime)s - {Style.BRIGHT}{"" if COLOR_DISABLED else prefix_color}"
+                f"%(asctime)s - {Style.BRIGHT}{prefix_color if self.color else ""}"
                 + f"{prefix_text}{Style.RESET_ALL} - %(name)s: %(message)s"
             )
         )
@@ -51,7 +51,7 @@ class ColoredFormatter(logging.Formatter):
         return formatter.format(record)
 
 
-def setup_logging(debug: bool) -> None:
+def setup_logging(debug: bool, color: bool) -> None:
     """Setup the root logger.
 
     Args:
@@ -65,6 +65,6 @@ def setup_logging(debug: bool) -> None:
 
     stream_handler = logging.StreamHandler()
     stream_handler.setLevel(logging_level)
-    stream_handler.setFormatter(ColoredFormatter())
+    stream_handler.setFormatter(ColoredFormatter(color))
 
     root_logger.addHandler(stream_handler)
