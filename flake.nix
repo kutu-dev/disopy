@@ -27,6 +27,8 @@
         # TODO: Maybe change its name
         name = "disopy";
 
+        LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [pkgs.libopus];
+
         shellHook = ''
           export PIP_NO_BINARY="ruff"
         '';

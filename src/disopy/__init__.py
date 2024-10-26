@@ -17,5 +17,6 @@ __version__ = "0.1.0"
 # The name of the application
 APP_NAME: Final[str] = "Disopy"
 DEFAULT_CONFIG_PATH: Final[Path] = Path(platformdirs.user_config_dir(APP_NAME))
+DEFAULT_CACHE_PATH: Final[Path] = Path(platformdirs.user_cache_dir(APP_NAME))
 
 colorama.just_fix_windows_console()

@@ -23,11 +23,17 @@ class Config(NamedTuple):
         version: The version of the config file.
         subsonic_url: The URL of the OpenSubsonic REST API.
         subsonic_user: The user to be used in authentication on the OpenSubsonic REST API.
+
+        developer_discord_sync_guild: The guild where commands should always be synced.
+        developer_discord_sync_users: The users allowed to trigger a global sync with.
     """
 
     version: int
     subsonic_url: str
     subsonic_user: str
+
+    developer_discord_sync_guild: int | None
+    developer_discord_sync_users: list[int]
 
 
 def get_config_file_path(config_path: Path) -> Path:
@@ -132,4 +138,16 @@ def get_config(config_path: Path) -> Config | None:
         subsonic_url = str(config["subsonic"]["url"])
         subsonic_user = str(config["subsonic"]["user"])
 
-        return Config(version=version, subsonic_url=subsonic_url, subsonic_user=subsonic_user)
+        developer_discord_sync_guild = None
+        developer_discord_sync_users: list[int] = []
+        if "developer" in config:
+            developer_discord_sync_guild = config["developer"]["discord-sync-guild"]
+            developer_discord_sync_users = config["developer"]["discord-sync-users"]
+
+        return Config(
+            version=version,
+            subsonic_url=subsonic_url,
+            subsonic_user=subsonic_user,
+            developer_discord_sync_guild=developer_discord_sync_guild,
+            developer_discord_sync_users=developer_discord_sync_users,
+        )

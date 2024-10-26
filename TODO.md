@@ -1,9 +1,5 @@
 # TODO
 
-## Next
-- Fix ugly hack with guild IDs on slash commands.
-- Make non opus files work.
-
 ## To be done
 - Add warning for Nix/NixOS users about recompilation of ruff: https://github.com/astral-sh/ruff/issues/1699#issuecomment-2148528249.
 - Add `PyPI` metadata to `pyproject.toml`.
@@ -11,7 +7,12 @@
     - Explanation about how to set up the project.
         - `hatch shell`.
     - Packages that should be installed beforehand.
+    - The unstable `developer` section.
 - Add CONTRIBUTORS/CREDITS file.
+- Check Subsonic on startup.
+- Cache option in cli.
+- Knuckles doesn't work with slashes on the names.
+- Knuckles download again the files.
 
 ## To be added
 - https://discordpy.readthedocs.io/en/stable/api.html#discord.utils.oauth_url

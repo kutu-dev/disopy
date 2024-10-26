@@ -8,3 +8,7 @@ version = 1
 url = "demo.navidrome.org"
 # The user to be use when authenticating in the OpenSubsonic server
 user = "demo"
+
+[developer]
+discord-sync-guild = 728748961426571344
+discord-sync-users = [493063130608566285]

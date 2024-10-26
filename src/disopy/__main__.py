@@ -10,10 +10,10 @@ from knuckles import Subsonic
 
 from . import APP_NAME
 from .config import generate_new_config, get_config
+from .discord import get_bot
 from .env import get_env
 from .logging import setup_logging
 from .options import get_options
-from .discord import get_client
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ def main() -> None:
 
     options = get_options(env.no_color)
 
-    setup_logging(options.debug, options.color)
+    setup_logging(options.debug >= 1, options.color)
 
     if options.generate_config:
         generate_new_config(options.config_path)
@@ -37,11 +37,12 @@ def main() -> None:
     if config is None:
         return
 
-    _subsonic = Subsonic(
+    subsonic = Subsonic(
         url=config.subsonic_url, user=config.subsonic_user, password=env.subsonic_password, client=APP_NAME
     )
 
-    get_client().run(env.discord_token)
+    logger.info(f"Starting {APP_NAME}!")
+    get_bot(subsonic, config).run(env.discord_token, log_level=logging.DEBUG if options.debug >= 2 else logging.INFO)
 
 
 if __name__ == "__main__":
