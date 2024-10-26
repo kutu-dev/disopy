@@ -2,8 +2,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+"""Handle command line arguments."""
+
 import argparse
-import os
 from pathlib import Path
 from typing import NamedTuple
 
@@ -27,8 +28,12 @@ class Options(NamedTuple):
     config_path: Path
 
 
-def get_options() -> Options:
+def get_options(force_no_color: bool = False) -> Options:
     """Get the options declared by the user.
+
+    Args:
+        force_no_color: If the color in the output of the program
+            should be disabled.
 
     Returns:
         An object that holds all the options declared by the user.
@@ -52,12 +57,7 @@ def get_options() -> Options:
 
     config_path = DEFAULT_CONFIG_PATH if args.config is None else Path(args.config)
 
-    no_color = (
-        "NO_COLOR" in os.environ
-        or f"{APP_NAME.upper()}_NO_COLOR" in os.environ
-        or os.environ.get("TERM", "") == "dumb"
-        or args.no_color
-    )
+    no_color = args.no_color or force_no_color
 
     return Options(
         debug=args.debug,

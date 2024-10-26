@@ -2,12 +2,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+"""Handle the configuration defined by the user in the config file."""
+
 import logging
 from pathlib import Path
 from typing import Any, NamedTuple
 
 import tomlkit
-from tomlkit import document, nl, table, comment, item
+from tomlkit import comment, document, item, nl, table
 
 from . import APP_NAME
 
@@ -15,6 +17,14 @@ logger = logging.getLogger(__name__)
 
 
 class Config(NamedTuple):
+    """Holds all the user defined config.
+
+    Attributes:
+        version: The version of the config file.
+        subsonic_url: The URL of the OpenSubsonic REST API.
+        subsonic_user: The user to be used in authentication on the OpenSubsonic REST API.
+    """
+
     version: int
     subsonic_url: str
     subsonic_user: str
@@ -59,7 +69,7 @@ def generate_new_config(config_path: Path) -> None:
         config_path: The path to the folder where config file should be stored.
     """
 
-    logger.info("Generating config file")
+    logger.info("Generating a new config file")
 
     config_file = get_config_file_path(config_path)
 

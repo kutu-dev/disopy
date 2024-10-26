@@ -10,10 +10,13 @@ dynamic = ["version"]
 requires-python = ">= 3.13.0"
 dependencies = [
   "knuckles>=1.1.0",
-  "hikari>=2.1.0",
   "platformdirs>=4.3.6",
   "colorama>=0.4.6",
   "tomlkit>=0.12.0",
+
+  "discord.py[voice]>=2.4.0",
+  "audioop-lts>=0.2.1",
+  "PyNaCl>=1.5.0"
 ]
 
 authors = [

@@ -38,6 +38,9 @@
           hatch
           python313
 
+          ffmpeg
+          libopus
+
           rustc
           cargo
         ];

@@ -5,6 +5,6 @@ version = 1
 
 [subsonic]
 # The URL where the OpenSubsonic REST API can be accessed
-url = "http://example.com"
+url = "demo.navidrome.org"
 # The user to be use when authenticating in the OpenSubsonic server
-user = "Alice"
+user = "demo"
