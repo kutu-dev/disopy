@@ -2,6 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+"""Holds a generic cog for the rest of them to be based of."""
+
 import logging
 
 import discord
@@ -12,12 +14,33 @@ logger = logging.getLogger(__name__)
 
 
 class Base(Cog):
+    """Base cog for all the other ones, with some utility functions
+
+    Attributes:
+        bot: The bot attached to the cog.
+    """
+
     def __init__(self, bot: Bot) -> None:
+        """The constructor of the cog.
+
+        Args:
+            bot: The bot attached to the cog.
+        """
+
         self.bot = bot
 
     async def send_embed(
         self, interaction: Interaction, title: str, content: list[str] | None = None, ephemeral: bool = False
     ) -> None:
+        """Send an embed as the response of an interaction.
+
+        Args:
+            interaction: The interaction to response.
+            title: The title of the embed.
+            content: The content of the embed split in its lines.
+            ephemeral: If the message should only be seen by the user that triggered the interaction.
+        """
+
         embed: discord.Embed = discord.Embed(
             description="\n".join(content) if content is not None else None, color=discord.Color.from_rgb(124, 0, 40)
         )

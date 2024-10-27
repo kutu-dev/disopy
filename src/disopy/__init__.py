@@ -10,12 +10,12 @@ from typing import Final
 import colorama
 import platformdirs
 
-# TODO: Change in release!
 __version__ = "0.1.0"
 
-# TODO: May be changed in the future
-# The name of the application
 APP_NAME: Final[str] = "Disopy"
+APP_NAME_UPPER: Final[str] = APP_NAME.upper()
+APP_NAME_LOWER: Final[str] = APP_NAME.lower()
+
 DEFAULT_CONFIG_PATH: Final[Path] = Path(platformdirs.user_config_dir(APP_NAME))
 DEFAULT_CACHE_PATH: Final[Path] = Path(platformdirs.user_cache_dir(APP_NAME))
 

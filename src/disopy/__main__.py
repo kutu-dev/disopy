@@ -7,6 +7,7 @@
 import logging
 
 from knuckles import Subsonic
+from knuckles.exceptions import ERROR_CODE_EXCEPTION
 
 from . import APP_NAME
 from .config import generate_new_config, get_config
@@ -42,10 +43,14 @@ def main() -> None:
     )
 
     logger.info(f"Starting {APP_NAME}!")
+
+    logger.info("Checking OpenSubsonic REST API status...")
+    if subsonic.system.ping().status != "ok":
+        logger.critical("The OpenSubsonic server is not available!")
+        return
+
     get_bot(subsonic, config, options).run(
-        env.discord_token, log_level=logging.DEBUG if options.debug >= 2 else logging.INFO
+        env.discord_token,
+        # Enable discord.py debug logging only on verbosity level 2 as it prints a lot
+        log_level=logging.DEBUG if options.debug >= 2 else logging.INFO,
     )
-
-
-if __name__ == "__main__":
-    main()

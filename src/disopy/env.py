@@ -8,7 +8,7 @@ import logging
 import os
 from typing import NamedTuple
 
-from . import APP_NAME
+from . import APP_NAME_UPPER
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +28,7 @@ class Env(NamedTuple):
 
 
 def get_env_variable(variable_name: str, disable_critical_message: bool = False) -> str | None:
-    """Get an environment variable prefix with the app name.
+    """Get an environment variable prefixed with the app name.
 
     Args:
         variable_name: The name of the variable.
@@ -38,7 +38,8 @@ def get_env_variable(variable_name: str, disable_critical_message: bool = False)
     Returns:
         The found variable or none.
     """
-    env_name = f"{APP_NAME.upper()}_{variable_name}"
+
+    env_name = f"{APP_NAME_UPPER}_{variable_name}"
     if env_name not in os.environ:
         if not disable_critical_message:
             logger.critical(f"'{env_name}' environment variable!")

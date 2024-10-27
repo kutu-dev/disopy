@@ -8,7 +8,7 @@ import argparse
 from pathlib import Path
 from typing import NamedTuple
 
-from . import APP_NAME, DEFAULT_CACHE_PATH, DEFAULT_CONFIG_PATH, __version__
+from . import APP_NAME, APP_NAME_LOWER, DEFAULT_CACHE_PATH, DEFAULT_CONFIG_PATH, __version__
 
 
 class Options(NamedTuple):
@@ -18,7 +18,9 @@ class Options(NamedTuple):
         debug: The level of verbosity of the output.
         color: If the output logs should be colored.
         generate_config: If the config should be generated.
+
         config_path: The path for config to be saved.
+        cache_path: The path to be used as cache.
     """
 
     debug: int
@@ -41,7 +43,7 @@ def get_options(force_no_color: bool = False) -> Options:
     """
 
     parser = argparse.ArgumentParser(
-        prog=APP_NAME,
+        prog=APP_NAME_LOWER,
         # TODO: To be added (like in the flake)
         description="...",
     )

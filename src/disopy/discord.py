@@ -2,13 +2,15 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+"""Implementation of the Discord bot"""
+
 import logging
 
 import discord
 from discord.ext.commands import Bot
-from discord.interactions import Interaction
 from knuckles import Subsonic
 
+from . import APP_NAME_LOWER
 from .cogs.misc import Misc
 from .cogs.queue import Queue
 from .cogs.search import Search
@@ -23,35 +25,20 @@ def get_bot(subsonic: Subsonic, config: Config, options: Options) -> Bot:
 
     Args:
         subsonic: The object to be used to access the OpenSubsonic REST API.
-        config: The configurations of the program.
+        config: The config of the program.
+        options: The options set on startup.
 
     Returns:
-        A configured ready to use bot
+        A configured ready to use bot.
     """
 
     intents = discord.Intents.default()
-    bot = discord.ext.commands.Bot("!", intents=intents)
-
-    async def send_embed(
-        interaction: Interaction, title: str, content: list[str] | None = None, ephemeral: bool = False
-    ) -> None:
-        embed: discord.Embed = discord.Embed(
-            description="\n".join(content) if content is not None else None, color=discord.Color.from_rgb(124, 0, 40)
-        )
-
-        if bot.user is None:
-            logger.error("The bot doesn't have a user attach to it!")
-            return
-
-        icon_url = None
-        if bot.user.avatar is not None:
-            icon_url = bot.user.avatar.url
-
-        embed.set_author(name=f"{title}", icon_url=icon_url)
-        await interaction.response.send_message(embed=embed, ephemeral=ephemeral)
+    bot = discord.ext.commands.Bot(f"!{APP_NAME_LOWER}", intents=intents)
 
     @bot.event
     async def on_ready() -> None:
+        """Thing to be run the startup of the bot"""
+
         logger.info(f"Logged in as '{bot.user}'")
 
         await bot.add_cog(Misc(bot, subsonic, config))

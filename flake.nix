@@ -39,6 +39,7 @@
           ripgrep
           hatch
           python313
+          python312Packages.docstr-coverage
 
           ffmpeg
           libopus

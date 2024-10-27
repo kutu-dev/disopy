@@ -11,7 +11,7 @@ from typing import Any, NamedTuple
 import tomlkit
 from tomlkit import comment, document, item, nl, table
 
-from . import APP_NAME
+from . import APP_NAME, APP_NAME_LOWER
 
 logger = logging.getLogger(__name__)
 
@@ -57,8 +57,7 @@ def get_config_file_path(config_path: Path) -> Path:
 def generate_new_config_tip_message() -> None:
     """Print a tip about how to generate a default config"""
 
-    # TODO: May change this
-    logger.info("You can generate a default config file with: disopy --generate-config")
+    logger.info(f"You can generate a default config file with: {APP_NAME_LOWER} --generate-config")
 
 
 def missing_entry_error_message(missing_entry: str) -> None:
@@ -92,7 +91,7 @@ def generate_new_config(config_path: Path) -> None:
     subsonic_table.add(comment("The URL where the OpenSubsonic REST API can be accessed"))
     subsonic_table.add("url", "http://example.com")
 
-    subsonic_table.add(comment("The user to be use when authenticating in the OpenSubsonic server"))
+    subsonic_table.add(comment("The user to be used when authenticating in the OpenSubsonic server"))
     subsonic_table.add("user", "Alice")
 
     doc.add("subsonic", subsonic_table)
@@ -102,7 +101,7 @@ def generate_new_config(config_path: Path) -> None:
 
 
 def get_config(config_path: Path) -> Config | None:
-    """Process the config files and returns them deserialized.
+    """Process the config files and returns it deserialized.
 
     Args:
         config_path: The path to the folder where config file should be accessed.
