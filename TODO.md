@@ -13,6 +13,7 @@
 - Cache option in cli.
 - Knuckles doesn't work with slashes on the names.
 - Knuckles download again the files.
+- Improve --help menu
 
 ## To be added
 - https://discordpy.readthedocs.io/en/stable/api.html#discord.utils.oauth_url

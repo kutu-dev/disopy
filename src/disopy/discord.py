@@ -5,45 +5,20 @@
 import logging
 
 import discord
-from discord import app_commands
 from discord.ext.commands import Bot
 from discord.interactions import Interaction
-import base64
 from knuckles import Subsonic
 
+from .cogs.misc import Misc
+from .cogs.queue import Queue
+from .cogs.search import Search
 from .config import Config
-from . import DEFAULT_CACHE_PATH
+from .options import Options
 
 logger = logging.getLogger(__name__)
 
 
-async def is_not_in_channel(interaction: Interaction) -> bool:
-    user = interaction.user
-    if isinstance(user, discord.User):
-        await interaction.response.send_message("You are not a member of the guild, something has gone very wrong...")
-        return True
-
-    if user.voice is None or user.voice.channel is None:
-        await interaction.response.send_message("You are not connected to any voice channel!")
-        return True
-
-    guild = interaction.guild
-    if guild is None:
-        await interaction.response.send_message("We are not chatting in a guild, something has gone very wrong...")
-        return True
-
-    if guild.voice_client is None:
-        await user.voice.channel.connect()
-        return False
-
-    if user.voice.channel != guild.voice_client.channel:
-        await interaction.response.send_message("Join the same voice channel where I am")
-        return True
-
-    return False
-
-
-def get_bot(subsonic: Subsonic, config: Config) -> Bot:
+def get_bot(subsonic: Subsonic, config: Config, options: Options) -> Bot:
     """Get the Discord bot.
 
     Args:
@@ -79,6 +54,10 @@ def get_bot(subsonic: Subsonic, config: Config) -> Bot:
     async def on_ready() -> None:
         logger.info(f"Logged in as '{bot.user}'")
 
+        await bot.add_cog(Misc(bot, subsonic, config))
+        await bot.add_cog(Search(bot, subsonic))
+        await bot.add_cog(Queue(bot, subsonic, options))
+
         if config.developer_discord_sync_guild is not None:
             logger.info(
                 f"Developer config detected, reloading command tree for guild: '{config.developer_discord_sync_guild}'"
@@ -87,97 +66,5 @@ def get_bot(subsonic: Subsonic, config: Config) -> Bot:
 
             bot.tree.copy_global_to(guild=guild_object)
             await bot.tree.sync(guild=guild_object)
-
-    @bot.tree.command(description="Get the latency of the bot")
-    async def ping(interaction: Interaction) -> None:
-        subsonic_status = "Ok ✅" if subsonic.system.ping().status == "ok" else "Failed ❌"
-
-        await send_embed(
-            interaction,
-            "Pong! 🏓",
-            [f"Bot latency: **{int(bot.latency * 1000)}ms**", f"Subsonic status: **{subsonic_status}**"],
-        )
-
-    @bot.tree.command(description="Sync the slash commands to the Discord cache globaly")
-    async def sync(interaction: discord.Interaction) -> None:
-        if interaction.user.id not in config.developer_discord_sync_users:
-            await send_embed(interaction, "Action not authorized", ephemeral=True)
-            return
-
-        await bot.tree.sync()
-        await send_embed(interaction, "Command tree reloaded", ephemeral=True)
-
-    @bot.tree.command(description="Search for a song, album, artist or playlist")
-    @app_commands.choices(
-        what=[
-            app_commands.Choice(name="Song", value="song"),
-            app_commands.Choice(name="Album", value="album"),
-            app_commands.Choice(name="Artist", value="artist"),
-            app_commands.Choice(name="Playlist", value="playlist"),
-        ]
-    )
-    async def search(
-        interaction: Interaction,
-        query: str,
-        # Ignore the MyPy error because discord.py uses the type to add autocompletion
-        what: app_commands.Choice[str] = "song",  # type: ignore
-    ) -> None:
-        choice = what if isinstance(what, str) else what.value
-
-        if choice == "playlist":
-            # TODO: Implement this somehow (ask in GH?)
-            await send_embed(
-                interaction,
-                "To be implemented!",
-                ["[Check the GitHub for updates](https://github.com/kutu-dev/disopy)"],
-            )
-
-        match choice:
-            case "song":
-                songs = subsonic.searching.search(query, song_count=10, album_count=0, artist_count=0).songs
-                songs = songs[:10] if songs is not None else []
-
-                content = [
-                    f"- **{song.title}**{f"- {song.artist.name}" if song.artist is not None else ""}" for song in songs
-                ]
-                await send_embed(interaction, f"Songs: {len(songs)} results", content)
-
-            case "album":
-                albums = subsonic.searching.search(query, song_count=0, album_count=10, artist_count=0).albums
-                albums = albums[:10] if albums is not None else []
-
-                content = [
-                    f"- **{album.name}**{f" - {album.artist.name}" if album.artist is not None else ""}"
-                    for album in albums
-                ]
-                await send_embed(interaction, f"Albums: {len(albums)} results", content)
-
-            case "artist":
-                artists = subsonic.searching.search(query, song_count=0, album_count=0, artist_count=10).artists
-                artists = artists[:10] if artists is not None else []
-
-                content = [f"- **{artist.name}**" for artist in artists]
-                await send_embed(interaction, f"Artists: {len(artists)} results", content)
-
-    @bot.tree.command(description="Play a song")
-    async def play(interaction: Interaction, song_name: str) -> None:
-        if await is_not_in_channel(interaction):
-            return None
-
-        songs = subsonic.searching.search(song_name, song_count=10, album_count=0, artist_count=0).songs
-        if songs is None:
-            return None
-
-        song = songs[0]
-        DEFAULT_CACHE_PATH.mkdir(parents=True, exist_ok=True)
-        song_path = subsonic.media_retrieval.download(song.id, DEFAULT_CACHE_PATH)
-
-        interaction.guild.voice_client.play(
-            discord.FFmpegPCMAudio(
-                str(song_path.absolute()),
-            ),
-        )
-
-        await interaction.response.send_message(f"Playing song {song_name}")
 
     return bot

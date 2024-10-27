@@ -42,7 +42,9 @@ def main() -> None:
     )
 
     logger.info(f"Starting {APP_NAME}!")
-    get_bot(subsonic, config).run(env.discord_token, log_level=logging.DEBUG if options.debug >= 2 else logging.INFO)
+    get_bot(subsonic, config, options).run(
+        env.discord_token, log_level=logging.DEBUG if options.debug >= 2 else logging.INFO
+    )
 
 
 if __name__ == "__main__":

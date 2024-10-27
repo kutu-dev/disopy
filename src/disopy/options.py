@@ -8,7 +8,7 @@ import argparse
 from pathlib import Path
 from typing import NamedTuple
 
-from . import APP_NAME, DEFAULT_CONFIG_PATH, __version__
+from . import APP_NAME, DEFAULT_CACHE_PATH, DEFAULT_CONFIG_PATH, __version__
 
 
 class Options(NamedTuple):
@@ -26,6 +26,7 @@ class Options(NamedTuple):
     generate_config: bool
 
     config_path: Path
+    cache_path: Path
 
 
 def get_options(force_no_color: bool = False) -> Options:
@@ -51,11 +52,13 @@ def get_options(force_no_color: bool = False) -> Options:
     parser.add_argument("--no-color", action="store_true")
     parser.add_argument("--generate-config", action="store_true")
 
-    parser.add_argument("-c", "--config")
+    parser.add_argument("-c", "--config-path")
+    parser.add_argument("--cache-path")
 
     args = parser.parse_args()
 
-    config_path = DEFAULT_CONFIG_PATH if args.config is None else Path(args.config)
+    config_path = DEFAULT_CONFIG_PATH if args.config_path is None else Path(args.config_path)
+    cache_path = DEFAULT_CACHE_PATH if args.cache_path is None else Path(args.cache_path)
 
     no_color = args.no_color or force_no_color
 
@@ -64,4 +67,5 @@ def get_options(force_no_color: bool = False) -> Options:
         color=not no_color,
         generate_config=args.generate_config,
         config_path=config_path,
+        cache_path=cache_path,
     )
