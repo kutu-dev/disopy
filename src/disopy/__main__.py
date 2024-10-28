@@ -7,7 +7,6 @@
 import logging
 
 from knuckles import Subsonic
-from knuckles.exceptions import ERROR_CODE_EXCEPTION
 
 from . import APP_NAME
 from .config import generate_new_config, get_config

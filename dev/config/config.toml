@@ -2,10 +2,11 @@
 
 # DO NOT MODIFY ME! Internal config file version
 version = 1
+volume = 100
 
 [subsonic]
 # The URL where the OpenSubsonic REST API can be accessed
-url = "demo.navidrome.org"
+url = "https://demo.navidrome.org"
 # The user to be use when authenticating in the OpenSubsonic server
 user = "demo"
 

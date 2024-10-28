@@ -10,6 +10,8 @@ import discord
 from discord.ext.commands import Bot, Cog
 from discord.interactions import Interaction
 
+from ..options import Options
+
 logger = logging.getLogger(__name__)
 
 
@@ -20,7 +22,7 @@ class Base(Cog):
         bot: The bot attached to the cog.
     """
 
-    def __init__(self, bot: Bot) -> None:
+    def __init__(self, bot: Bot, options: Options) -> None:
         """The constructor of the cog.
 
         Args:
@@ -28,6 +30,7 @@ class Base(Cog):
         """
 
         self.bot = bot
+        self.options = options
 
     async def send_embed(
         self, interaction: Interaction, title: str, content: list[str] | None = None, ephemeral: bool = False
@@ -40,6 +43,9 @@ class Base(Cog):
             content: The content of the embed split in its lines.
             ephemeral: If the message should only be seen by the user that triggered the interaction.
         """
+
+        if self.options.debug >= 3:
+            logger.debug(f"Sending embed (Title: {title} Content: {content} Ephemeral: {ephemeral})")
 
         embed: discord.Embed = discord.Embed(
             description="\n".join(content) if content is not None else None, color=discord.Color.from_rgb(124, 0, 40)

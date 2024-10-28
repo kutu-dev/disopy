@@ -44,18 +44,23 @@ def get_options(force_no_color: bool = False) -> Options:
 
     parser = argparse.ArgumentParser(
         prog=APP_NAME_LOWER,
-        # TODO: To be added (like in the flake)
-        description="...",
+        description="A Discord bot for listening music from a Subsonic server.",
     )
 
     parser.add_argument("-v", "--version", action="version", version=f"{APP_NAME} - {__version__}")
 
-    parser.add_argument("-d", "--debug", action="count", default=0)
-    parser.add_argument("--no-color", action="store_true")
-    parser.add_argument("--generate-config", action="store_true")
+    parser.add_argument(
+        "-d",
+        "--debug",
+        action="count",
+        default=0,
+        help="add extra debug info, can be used multiple times for more verbosity",
+    )
+    parser.add_argument("--no-color", action="store_true", help="disable color escape sequences from the logs")
+    parser.add_argument("--generate-config", action="store_true", help="regenerate the config file to the default one")
 
-    parser.add_argument("-c", "--config-path")
-    parser.add_argument("--cache-path")
+    parser.add_argument("-c", "--config-path", help="a custom config directory path")
+    parser.add_argument("--cache-path", help="a custom cache directory path")
 
     args = parser.parse_args()
 

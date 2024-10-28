@@ -9,11 +9,12 @@ from discord.ext.commands import Bot
 from discord.interactions import Interaction
 from knuckles import Subsonic
 
+from ..options import Options
 from .base import Base
 
 
 class Search(Base):
-    def __init__(self, bot: Bot, subsonic: Subsonic) -> None:
+    def __init__(self, bot: Bot, options: Options, subsonic: Subsonic) -> None:
         """The constructor of the cog.
 
         Args:
@@ -21,7 +22,7 @@ class Search(Base):
             subsonic: The object to be used to access the OpenSubsonic REST API.
         """
 
-        super().__init__(bot)
+        super().__init__(bot, options)
 
         self.subsonic = subsonic
 

@@ -41,9 +41,9 @@ def get_bot(subsonic: Subsonic, config: Config, options: Options) -> Bot:
 
         logger.info(f"Logged in as '{bot.user}'")
 
-        await bot.add_cog(Misc(bot, subsonic, config))
-        await bot.add_cog(Search(bot, subsonic))
-        await bot.add_cog(Queue(bot, subsonic, options))
+        await bot.add_cog(Misc(bot, options, subsonic, config))
+        await bot.add_cog(Search(bot, options, subsonic))
+        await bot.add_cog(Queue(bot, options, subsonic, config))
 
         if config.developer_discord_sync_guild is not None:
             logger.info(

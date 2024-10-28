@@ -11,6 +11,7 @@ from discord.interactions import Interaction
 from knuckles import Subsonic
 
 from ..config import Config
+from ..options import Options
 from .base import Base
 
 
@@ -22,7 +23,7 @@ class Misc(Base):
         config: The config of the program.
     """
 
-    def __init__(self, bot: Bot, subsonic: Subsonic, config: Config) -> None:
+    def __init__(self, bot: Bot, options: Options, subsonic: Subsonic, config: Config) -> None:
         """The constructor of the cog.
 
         Args:
@@ -31,7 +32,7 @@ class Misc(Base):
             config: The config of the program.
         """
 
-        super().__init__(bot)
+        super().__init__(bot, options)
 
         self.subsonic = subsonic
         self.config = config

@@ -21,6 +21,8 @@ class Config(NamedTuple):
 
     Attributes:
         version: The version of the config file.
+        volume: The base volume the playback should have.
+
         subsonic_url: The URL of the OpenSubsonic REST API.
         subsonic_user: The user to be used in authentication on the OpenSubsonic REST API.
 
@@ -29,6 +31,8 @@ class Config(NamedTuple):
     """
 
     version: int
+    volume: int
+
     subsonic_url: str
     subsonic_user: str
 
@@ -83,8 +87,11 @@ def generate_new_config(config_path: Path) -> None:
     doc.add(nl())
 
     doc.add(comment("DO NOT MODIFY ME! Internal config file version"))
-    # Ugly hack to avoid `mypy` errors, the `tomlkit` typing is really bad
+    # Ugly hack to avoid `mypy` errors when using numbers, the `tomlkit` typing is really bad
     doc.add("version", item(1))
+    doc.add(comment("The volume of the music playback in percentage"))
+    doc.add("volume", item(100))
+
     doc.add(nl())
 
     subsonic_table = table()
@@ -125,6 +132,14 @@ def get_config(config_path: Path) -> Config | None:
 
         # Here old version can be migrated
 
+        if "volume" not in config:
+            missing_entry_error_message("volume")
+            return None
+
+        volume = int(config["volume"])
+        if volume < 0:
+            logger.critical("The volume config entry is lower than 0%")
+
         if "subsonic" not in config:
             missing_entry_error_message("subsonic")
             return None
@@ -145,6 +160,7 @@ def get_config(config_path: Path) -> Config | None:
 
         return Config(
             version=version,
+            volume=volume,
             subsonic_url=subsonic_url,
             subsonic_user=subsonic_user,
             developer_discord_sync_guild=developer_discord_sync_guild,
