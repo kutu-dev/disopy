@@ -43,6 +43,9 @@ And then just start the bot!
 DISOPY_SUBSONIC_PASSWORD=foo DISOPY_DISCORD_TOKEN=bar disopy
 ```
 
+## Contributing
+If you are interested in fixing bugs or adding new features please check the [contributing guide](./CONTRIBUTING.md).
+
 ## Acknowledgements
 - Created with :heart: by [Jorge "Kutu" Dobón Blanco](https://dobon.dev).
 - [JmTexas19](https://github.com/JmTexas19): Creator of [Subrift](https://github.com/JmTexas19/subrift), project forked that served as a base for Disopy.
