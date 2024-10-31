@@ -44,6 +44,8 @@
 
           rustc
           cargo
+
+          docker
         ];
       };
     });

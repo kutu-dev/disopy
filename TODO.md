@@ -1,7 +1,5 @@
 # TODO
 
-- Finish the changelog.
-
 - Add Dockerfile, compose and CI/CD.
 
 - Add `pause`.

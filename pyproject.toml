@@ -35,8 +35,8 @@ classifiers = [
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.13",
-  "Intended Audience :: System Administrators"
-  "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
+  "Intended Audience :: System Administrators",
+  "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
   "Environment :: Web Environment",
   "Operating System :: OS Independent",
   "Topic :: Internet",
