@@ -27,6 +27,6 @@ hatch shell
 ```
 
 ## Development extra configs
-The `[development]` section in the config is unstable, not verified or migrated and intended only for the development workflow. This section is the only living explanation of its entries:
+The `[developer]` section in the config is unstable, not verified or migrated and intended only for the development workflow. This section is the only living explanation of its entries:
 - `discord-sync-guild`: The ID of the guild where the slash commands should always be sync in startup.
 - `discord-sync-users`: The list of IDs of the users that are allowed to trigger a global slash commands cache regeneration with `/sync`.
