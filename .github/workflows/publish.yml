@@ -1,0 +1,28 @@
+name: Publish update to PyPI
+
+on:
+  release:
+    types: published
+
+jobs:
+  publish-pypi:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: pypi
+      url: https://pypi.org/project/disopy/
+    permissions:
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13.0"
+
+      - uses: pypa/hatch@install
+
+      - run: hatch build
+
+      - name: Publish updated package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
