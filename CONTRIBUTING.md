@@ -26,6 +26,17 @@ And finally enter the `venv`:
 hatch shell
 ```
 
+In the `./dev` directory is located an example config file to be used in devepment, to load the bot with it start it like this:
+```sh
+DISOPY_SUBSONIC_PASSWORD=foo DISOPY_DISCORD_TOKEN=bar disopy -c ./dev/config
+```
+
+## Linting and formatting
+You can check that your changes follow the lint and format guidelines and try to fix some of the issues by running:
+```sh
+just check
+```
+
 ## Development extra configs
 The `[developer]` section in the config is unstable, not verified or migrated and intended only for the development workflow. This section is the only living explanation of its entries:
 - `discord-sync-guild`: The ID of the guild where the slash commands should always be sync in startup.
