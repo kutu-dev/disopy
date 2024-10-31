@@ -16,11 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class Base(Cog):
-    """Base cog for all the other ones, with some utility functions
-
-    Attributes:
-        bot: The bot attached to the cog.
-    """
+    """Base cog for all the other ones, with some utility function."""
 
     def __init__(self, bot: Bot, options: Options) -> None:
         """The constructor of the cog.

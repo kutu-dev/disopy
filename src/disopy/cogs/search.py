@@ -14,6 +14,8 @@ from .base import Base
 
 
 class Search(Base):
+    """Cog that holds search related commands."""
+
     def __init__(self, bot: Bot, options: Options, subsonic: Subsonic) -> None:
         """The constructor of the cog.
 

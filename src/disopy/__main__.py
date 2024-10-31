@@ -48,6 +48,9 @@ def main() -> None:
         logger.critical("The OpenSubsonic server is not available!")
         return
 
+    logger.info("Healthy Subsonic server status reported!")
+
+    logger.info("Logging to Discord...")
     get_bot(subsonic, config, options).run(
         env.discord_token,
         # Enable discord.py debug logging only on verbosity level 2 as it prints a lot

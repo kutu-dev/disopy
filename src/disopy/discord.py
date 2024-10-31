@@ -12,7 +12,7 @@ from knuckles import Subsonic
 
 from . import APP_NAME_LOWER
 from .cogs.misc import Misc
-from .cogs.queue import Queue
+from .cogs.queue import QueueCog
 from .cogs.search import Search
 from .config import Config
 from .options import Options
@@ -43,7 +43,7 @@ def get_bot(subsonic: Subsonic, config: Config, options: Options) -> Bot:
 
         await bot.add_cog(Misc(bot, options, subsonic, config))
         await bot.add_cog(Search(bot, options, subsonic))
-        await bot.add_cog(Queue(bot, options, subsonic, config))
+        await bot.add_cog(QueueCog(bot, options, subsonic, config))
 
         if config.developer_discord_sync_guild is not None:
             logger.info(

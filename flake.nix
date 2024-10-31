@@ -23,7 +23,6 @@
 
     devShells = forAllSystems ({pkgs}: {
       default = pkgs.mkShell {
-        # TODO: Maybe change its name
         name = "disopy";
 
         LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [pkgs.libopus];

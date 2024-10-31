@@ -16,12 +16,7 @@ from .base import Base
 
 
 class Misc(Base):
-    """Cog that holds miscellaneous commands.
-
-    Attributes:
-        subsonic: The Subsonic object used to access the OpenSubsonic REST API.
-        config: The config of the program.
-    """
+    """Cog that holds miscellaneous commands."""
 
     def __init__(self, bot: Bot, options: Options, subsonic: Subsonic, config: Config) -> None:
         """The constructor of the cog.
