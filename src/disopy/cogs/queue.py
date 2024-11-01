@@ -33,15 +33,15 @@ class Song(NamedTuple):
     title: str
 
 
-class Queue:
-    """Manage the queue and split it per guild."""
+class GuildChecker:
+    """Helper class to check and manage guilds."""
 
     def __init__(self) -> None:
-        """Create a new queue."""
+        """Create a new guild checker."""
 
-        self.queue: dict[str, deque[Song]] = {}
+        self.guilds: dict[str, deque[Song]] = {}
 
-    def _check_guild(self, interaction: Interaction) -> str | None:
+    def check_guild(self, interaction: Interaction) -> str | None:
         """Check if a guild has an associated queue and if not creates a new one.
 
         Args:
@@ -57,10 +57,19 @@ class Queue:
 
         id = str(interaction.guild.id)
 
-        if id not in self.queue:
-            self.queue[id] = deque()
+        if id not in self.guilds:
+            self.guilds[id] = deque()
 
         return id
+
+
+class Queue:
+    """Manage the queue and split it per guild."""
+
+    def __init__(self, guild_checker: GuildChecker) -> None:
+        """Create a new queue."""
+
+        self.guild_checker = guild_checker
 
     def get(self, interaction: Interaction) -> Iterable[Song]:
         """Get the queue of a guild.
@@ -72,11 +81,11 @@ class Queue:
             An iterable with the songs of the queue.
         """
 
-        id = self._check_guild(interaction)
+        id = self.guild_checker.check_guild(interaction)
         if id is None:
             return []
 
-        return self.queue[id]
+        return self.guild_checker.guilds[id]
 
     def pop(self, interaction: Interaction) -> Song | None:
         """Remove and get one song from the queue.
@@ -88,11 +97,11 @@ class Queue:
             The next song in the queue or None if the action failed.
         """
 
-        id = self._check_guild(interaction)
+        id = self.guild_checker.check_guild(interaction)
         if id is None:
             return None
 
-        return self.queue[id].pop()
+        return self.guild_checker.guilds[id].pop()
 
     def append(self, interaction: Interaction, song: Song) -> None:
         """Append new songs to the queue.
@@ -102,11 +111,11 @@ class Queue:
             song: The song to append.
         """
 
-        id = self._check_guild(interaction)
+        id = self.guild_checker.check_guild(interaction)
         if id is None:
             return
 
-        return self.queue[id].append(song)
+        return self.guild_checker.guilds[id].append(song)
 
     def length(self, interaction: Interaction) -> int:
         """Get the length of the queue.
@@ -118,12 +127,12 @@ class Queue:
             The length of the queue.
         """
 
-        id = self._check_guild(interaction)
+        id = self.guild_checker.check_guild(interaction)
         if id is None:
             # A little ugly but gets the job done
             return 0
 
-        return len(self.queue[id])
+        return len(self.guild_checker.guilds[id])
 
 
 class QueueCog(Base):
@@ -144,7 +153,8 @@ class QueueCog(Base):
         self.subsonic = subsonic
         self.config = config
 
-        self.queue = Queue()
+        self.guild_checker = GuildChecker()
+        self.queue = Queue(self.guild_checker)
 
         self.skip_next_autoplay = False
 
