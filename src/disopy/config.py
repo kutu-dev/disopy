@@ -39,6 +39,45 @@ class Config(NamedTuple):
     developer_discord_sync_guild: int | None
     developer_discord_sync_users: list[int]
 
+    def update_volume(self, new_volume: int) -> None:
+        """Update the volume setting in the config.
+
+        Args:
+            new_volume: The new volume level.
+        """
+        self.volume = new_volume
+
+    def save(self, config_path: Path) -> None:
+        """Save the updated config to the config file.
+
+        Args:
+            config_path: The path to the folder where config file should be stored.
+        """
+        config_file = get_config_file_path(config_path)
+
+        doc = document()
+        doc.add(comment(f"{APP_NAME} config file"))
+        doc.add(nl())
+
+        doc.add(comment("DO NOT MODIFY ME! Internal config file version"))
+        doc.add("version", item(self.version))
+        doc.add(comment("The volume of the music playback in percentage"))
+        doc.add("volume", item(self.volume))
+
+        doc.add(nl())
+
+        subsonic_table = table()
+        subsonic_table.add(comment("The URL where the OpenSubsonic REST API can be accessed"))
+        subsonic_table.add("url", self.subsonic_url)
+
+        subsonic_table.add(comment("The user to be used when authenticating in the OpenSubsonic server"))
+        subsonic_table.add("user", self.subsonic_user)
+
+        doc.add("subsonic", subsonic_table)
+
+        with open(config_file, "w") as f:
+            f.write(doc.as_string())
+
 
 def get_config_file_path(config_path: Path) -> Path:
     """Get the config file path and generate the file.

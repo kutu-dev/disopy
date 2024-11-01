@@ -373,3 +373,19 @@ class QueueCog(Base):
             content.append(f"- **{song.title}**")
 
         await self.send_embed(interaction, f"Queue ({self.queue.length(interaction)} remaining)", content)
+
+    @app_commands.command(description="Adjust the volume")
+    async def volume(self, interaction: Interaction, volume: int) -> None:
+        """Adjust the volume of the playback.
+
+        Args:
+            interaction: The interaction that started the command.
+            volume: The new volume level.
+        """
+
+        if volume < 0 or volume > 100:
+            await self.send_embed(interaction, "Volume must be between 0 and 100")
+            return
+
+        self.config.volume = volume
+        await self.send_embed(interaction, f"Volume set to {volume}%")
