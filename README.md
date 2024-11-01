@@ -31,7 +31,7 @@ disopy --generate-config
 It will be located at `${XDG_CONFIG_DIR}/disopy/config.toml` (in most cases `$HOME/.config/disopy/config.toml`), remember to edit it with your configuration values.
 
 ### Docker
-_TODO_
+There is an official Docker container with name [`ghcr.io/kutu-dev/disopy`](https://github.com/kutu-dev/disopy/pkgs/container/disopy). An [example compose file](./compose.yaml) is also provided.
 
 ## Running the bot
 The bot needs two environment variables:

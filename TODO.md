@@ -1,7 +1,5 @@
 # TODO
 
-- Add Dockerfile, compose and CI/CD.
-
 - Add `pause`.
 - Improve embed messages:
     - Song title in stop.
