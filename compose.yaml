@@ -1,0 +1,11 @@
+services:
+  disopy:
+    image: ghcr.io/kutu-dev/disopy
+    container_name: disopy
+
+    environment:
+      - DISOPY_SUBSONIC_PASSWORD=YOUR_SUBSONIC_PASSWORD
+      - DISOPY_DISCORD_TOKEN=YOUR_DISCORD_TOKEN
+
+    volumes:
+      - ./dev/config:/config

@@ -42,7 +42,7 @@ def get_env_variable(variable_name: str, disable_critical_message: bool = False)
     env_name = f"{APP_NAME_UPPER}_{variable_name}"
     if env_name not in os.environ:
         if not disable_critical_message:
-            logger.critical(f"'{env_name}' environment variable!")
+            logger.critical(f"The '{env_name}' environment variable is missing!")
 
         return None
 
