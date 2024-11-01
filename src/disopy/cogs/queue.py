@@ -317,7 +317,7 @@ class QueueCog(Base):
         self.skip_next_autoplay = True
         voice_client.stop()
 
-        await self.send_embed(interaction, "Song stopped")
+        await self.send_embed(interaction, "Song stopped", [f"Stopped: **{voice_client.source.title}**"])
 
     @app_commands.command(description="Skip the current song")
     async def skip(self, interaction: Interaction) -> None:
@@ -339,7 +339,7 @@ class QueueCog(Base):
             return
 
         voice_client.stop()
-        await self.send_embed(interaction, "Song skipped")
+        await self.send_embed(interaction, "Song skipped", [f"Skipped to: **{voice_client.source.title}**"])
 
     @app_commands.command(description="Resume the queue playback")
     async def resume(self, interaction: Interaction) -> None:
@@ -357,7 +357,7 @@ class QueueCog(Base):
             return
 
         self.play_queue(interaction, None)
-        await self.send_embed(interaction, "Resuming the playback")
+        await self.send_embed(interaction, "Resuming the playback", [f"Resumed: **{voice_client.source.title}**"])
 
     @app_commands.command(name="queue", description="See the current queue")
     # Name changed to avoid collisions with the property `queue`
@@ -389,3 +389,25 @@ class QueueCog(Base):
 
         self.config.volume = volume
         await self.send_embed(interaction, f"Volume set to {volume}%")
+
+    @app_commands.command(description="Pause the current song")
+    async def pause(self, interaction: Interaction) -> None:
+        """Pause the song that is currently playing.
+
+        Args:
+            interaction: The interaction that started the command.
+        """
+
+        if await self.is_not_in_channel(interaction):
+            return
+
+        voice_client = await self.get_voice_client(interaction)
+        if voice_client is None:
+            return
+
+        if not voice_client.is_playing():
+            await self.send_embed(interaction, "No song currently playing!")
+            return
+
+        voice_client.pause()
+        await self.send_embed(interaction, "Song paused", [f"Paused: **{voice_client.source.title}**"])
