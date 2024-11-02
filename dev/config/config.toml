@@ -7,6 +7,8 @@ volume = 100
 [subsonic]
 # The URL where the OpenSubsonic REST API can be accessed
 url = "https://demo.navidrome.org"
+# Whether to verify the server's certificate.
+use_https = true
 # The user to be use when authenticating in the OpenSubsonic server
 user = "demo"
 

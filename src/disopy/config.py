@@ -24,8 +24,10 @@ class Config:
     Attributes:
         version: The version of the config file.
         volume: The base volume the playback should have.
+        
 
         subsonic_url: The URL of the OpenSubsonic REST API.
+        use_https: Whether to verify the server's certificate.
         subsonic_user: The user to be used in authentication on the OpenSubsonic REST API.
 
         developer_discord_sync_guild: The guild where commands should always be synced.
@@ -34,8 +36,9 @@ class Config:
 
     version: int
     volume: int
-
+    
     subsonic_url: str
+    use_https: bool
     subsonic_user: str
 
     developer_discord_sync_guild: int | None
@@ -100,6 +103,9 @@ def generate_new_config(config_path: Path) -> None:
     subsonic_table.add(comment("The URL where the OpenSubsonic REST API can be accessed"))
     subsonic_table.add("url", "http://example.com")
 
+    subsonic_table.add(comment("Whether to verify the server's certificate"))
+    subsonic_table.add("use_https", True)
+
     subsonic_table.add(comment("The user to be used when authenticating in the OpenSubsonic server"))
     subsonic_table.add("user", "Alice")
 
@@ -146,12 +152,13 @@ def get_config(config_path: Path) -> Config | None:
             missing_entry_error_message("subsonic")
             return None
 
-        for entry in ["url", "user"]:
+        for entry in ["url", "use_https", "user"]:
             if entry not in config["subsonic"].value:
                 missing_entry_error_message(f"subsonic.{entry}")
                 return None
 
         subsonic_url = str(config["subsonic"]["url"])
+        use_https = bool(config["subsonic"]["use_https"])
         subsonic_user = str(config["subsonic"]["user"])
 
         developer_discord_sync_guild = None
@@ -164,6 +171,7 @@ def get_config(config_path: Path) -> Config | None:
             version=version,
             volume=volume,
             subsonic_url=subsonic_url,
+            use_https=use_https,
             subsonic_user=subsonic_user,
             developer_discord_sync_guild=developer_discord_sync_guild,
             developer_discord_sync_users=developer_discord_sync_users,
