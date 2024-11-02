@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2024-11-02
+### Added
+- Support for adding to the queue albums and playlists.
+
+### Modified
+- Embeds with more clear messages, emojis and an error variant.
+
+### Removed
+- Modify and save the volume set by the users in the config file (Hard and too niche to implement with multiple guilds in mind).
+
 ## [2.0.0] - 2024-11-01
 
 ### Added

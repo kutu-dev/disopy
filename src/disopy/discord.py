@@ -33,6 +33,8 @@ def get_bot(subsonic: Subsonic, config: Config, options: Options) -> Bot:
     """
 
     intents = discord.Intents.default()
+    intents.message_content = True
+
     bot = discord.ext.commands.Bot(f"!{APP_NAME_LOWER}", intents=intents)
 
     @bot.event

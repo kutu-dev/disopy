@@ -10,7 +10,7 @@ from typing import Final
 import colorama
 import platformdirs
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 APP_NAME: Final[str] = "Disopy"
 APP_NAME_UPPER: Final[str] = APP_NAME.upper()

@@ -33,7 +33,7 @@ class Search(Base):
 
         Args:
             query: The query to be searched.
-            what: What thing should be searched.
+            what: What thing should be searched ("song", "album", "artist")
 
         Returns:
             A tuple that contains both the title and the content for the embed.
@@ -61,17 +61,16 @@ class Search(Base):
         match choice:
             case "song":
                 songs = search.songs[:10] if search.songs is not None else []
-                title = f"Songs ({len(songs)} results)"
+                title = f"🎵 Songs ({len(songs)} results)"
 
                 for song in songs:
-                    print(song.title)
                     content.append(
                         f"- **{song.title}**" + (f" - {song.artist.name}" if song.artist is not None else "")
                     )
 
             case "album":
                 albums = search.albums[:10] if search.albums is not None else []
-                title = f"Albums ({len(albums)} results)"
+                title = f"🎶 Albums ({len(albums)} results)"
 
                 for album in albums:
                     content.append(
@@ -80,7 +79,7 @@ class Search(Base):
 
             case "artist":
                 artists = search.artists[:10] if search.artists is not None else []
-                title = f"Artists ({len(artists)} results)"
+                title = f"🎤 Artists ({len(artists)} results)"
 
                 for artist in artists:
                     content.append(f"- **{artist.name}**")
@@ -107,7 +106,7 @@ class Search(Base):
             if query in playlist.name:
                 content.append(f"- {playlist.name}")
 
-        title = f"Playlists ({len(content)} results)"
+        title = f"🎼 Playlists ({len(content)} results)"
 
         return title, content
 
@@ -147,4 +146,4 @@ class Search(Base):
         else:
             title, content = self.api_search(query, choice)
 
-        await self.send_embed(interaction, title, content)
+        await self.send_answer(interaction, title, content)

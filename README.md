@@ -43,6 +43,9 @@ And then just start the bot!
 DISOPY_SUBSONIC_PASSWORD=foo DISOPY_DISCORD_TOKEN=bar disopy
 ```
 
+> [!WARNING]  
+> This bot needs the `Message Content Intent` privileged Gateway enable in the [Discord Developers Application](https://discord.com/developers/applications) Bot settings to run correctly.
+
 ## Contributing
 If you are interested in fixing bugs or adding new features please check the [contributing guide](./CONTRIBUTING.md).
 

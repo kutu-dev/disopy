@@ -40,11 +40,11 @@ class Misc(Base):
             interaction: The interaction that started the command.
         """
 
-        subsonic_status = "Ok ✅" if self.subsonic.system.ping().status == "ok" else "Failed ❌"
+        subsonic_status = "✅ Ok" if self.subsonic.system.ping().status == "ok" else "❌ Failed"
 
-        await self.send_embed(
+        await self.send_answer(
             interaction,
-            "Pong! 🏓",
+            "🏓 Pong!",
             [f"Bot latency: **{int(self.bot.latency * 1000)}ms**", f"Subsonic status: **{subsonic_status}**"],
         )
 
@@ -57,8 +57,8 @@ class Misc(Base):
         """
 
         if interaction.user.id not in self.config.developer_discord_sync_users:
-            await self.send_embed(interaction, "Action not authorized ❌", ephemeral=True)
+            await self.send_error(interaction, ["❌ Action not authorized"], ephemeral=True)
             return
 
         await self.bot.tree.sync()
-        await self.send_embed(interaction, "Command tree reloaded 🔁", ephemeral=True)
+        await self.send_answer(interaction, "🔁 Command tree reloaded", ephemeral=True)

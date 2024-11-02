@@ -28,7 +28,7 @@ class Base(Cog):
         self.bot = bot
         self.options = options
 
-    async def send_embed(
+    async def send_answer(
         self, interaction: Interaction, title: str, content: list[str] | None = None, ephemeral: bool = False
     ) -> None:
         """Send an embed as the response of an interaction.
@@ -57,3 +57,6 @@ class Base(Cog):
 
         embed.set_author(name=f"{title}", icon_url=icon_url)
         await interaction.response.send_message(embed=embed, ephemeral=ephemeral)
+
+    async def send_error(self, interaction: Interaction, error_content: list[str], ephemeral: bool = False) -> None:
+        await self.send_answer(interaction, "Error ⚠️", error_content, ephemeral)
