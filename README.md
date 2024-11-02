@@ -54,3 +54,4 @@ If you are interested in fixing bugs or adding new features please check the [co
 - [JmTexas19](https://github.com/JmTexas19): Creator of [Subrift](https://github.com/JmTexas19/subrift), project forked that served as a base for Disopy.
 - [iGieri](https://github.com/iGieri): Fix issue [#1](https://github.com/kutu-dev/disopy/issues/1).
 - [outmaneuver](https://github.com/outmaneuver): Fix issue [#3](https://github.com/kutu-dev/disopy/issues/3).
+- [An May (YUR0ii)](https://github.com/YUR0ii): Make [HTTPS optional](https://github.com/kutu-dev/disopy/pull/11).

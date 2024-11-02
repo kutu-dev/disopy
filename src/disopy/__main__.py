@@ -38,10 +38,19 @@ def main() -> None:
         return
 
     subsonic = Subsonic(
-        url=config.subsonic_url, user=config.subsonic_user, password=env.subsonic_password, client=APP_NAME, use_https=config.use_https
+        url=config.subsonic_url,
+        user=config.subsonic_user,
+        password=env.subsonic_password,
+        client=APP_NAME,
+        use_https=config.use_https,
     )
 
     logger.info(f"Starting {APP_NAME}!")
+
+    if not config.use_https:
+        logger.warning(
+            "Secure conection (HTTPS) to the Subsonic server is disable in the config file, using plain HTTP!"
+        )
 
     logger.info("Checking OpenSubsonic REST API status...")
     if subsonic.system.ping().status != "ok":
