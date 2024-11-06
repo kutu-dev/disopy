@@ -21,16 +21,16 @@ logger = logging.getLogger(__name__)
 def main() -> None:
     """The entry point of the program."""
 
-    env = get_env()
-    if env is None:
-        return
-
-    options = get_options(env.no_color)
+    options = get_options()
 
     setup_logging(options.debug >= 1, options.color)
 
     if options.generate_config:
         generate_new_config(options.config_path)
+        return
+
+    env = get_env()
+    if env is None:
         return
 
     config = get_config(options.config_path)

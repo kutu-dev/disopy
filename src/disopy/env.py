@@ -49,15 +49,19 @@ def get_env_variable(variable_name: str, disable_critical_message: bool = False)
     return os.environ[env_name]
 
 
-def get_env() -> Env | None:
+def get_env(disable_critical_message: bool = False) -> Env | None:
     """Get the relevant environment of the program.
+
+    Args:
+        disable_critical_message: If an error message should not be printed
+            if the variable is not found.
 
     Returns:
         The environment of the program.
     """
 
-    subsonic_password = get_env_variable("SUBSONIC_PASSWORD")
-    discord_token = get_env_variable("DISCORD_TOKEN")
+    subsonic_password = get_env_variable("SUBSONIC_PASSWORD", disable_critical_message)
+    discord_token = get_env_variable("DISCORD_TOKEN", disable_critical_message)
 
     if subsonic_password is None or discord_token is None:
         return None
