@@ -37,16 +37,30 @@ There is an official Docker container with name [`ghcr.io/kutu-dev/disopy`](http
 
 ## Running the bot
 The bot needs two environment variables:
-- `DISOPY_SUBSONIC_PASSWORD`: The password to be send to the Subsonic REST API.
-- `DISOPY_DISCORD_TOKEN`: The token to be used when authenticating to the Discord API.
+### `DISOPY_SUBSONIC_PASSWORD`
+The password to be send to the Subsonic REST API. Usually it'll be the same that you use to login in the WebUI of your Subsonic compatible server.
+
+### `DISOPY_DISCORD_TOKEN`
+The token to be used when authenticating to the Discord API. To set up a bot on Discord follow this tutorial:
+1. Go to the [Discord Developer Portal](https://discord.com/developers/applications).
+2. Create a new application.
+3. On the application go to `Bot`.
+4. Enable `Message Content Intent`.
+5. And click on `Reset Token` to get string you should put on the env variable.
+
+#### How to create an invite link
+1. Go to the [Discord Developer Portal](https://discord.com/developers/applications).
+2. Enter your bot application.
+3. On the application go to `OAuth2`.
+4. Copy your `Client ID`.
+5. Go to this preconfigured [Discord Permissions Calculator](https://discordapi.com/permissions.html#2184186880).
+6. Paste your `Client ID` on the bottom.
+7. Copy and share your invite link at the bottom of the web!
 
 And then just start the bot!
 ```sh
 DISOPY_SUBSONIC_PASSWORD=foo DISOPY_DISCORD_TOKEN=bar disopy
 ```
-
-> [!WARNING]  
-> This bot needs the `Message Content Intent` privileged Gateway enable in the [Discord Developers Application](https://discord.com/developers/applications) Bot settings to run correctly.
 
 ## Contributing
 If you are interested in fixing bugs or adding new features please check the [contributing guide](./CONTRIBUTING.md).
