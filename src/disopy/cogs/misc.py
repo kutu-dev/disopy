@@ -56,7 +56,7 @@ class Misc(Base):
             interaction: The interaction that started the command.
         """
 
-        if interaction.user.id not in self.config.developer_discord_sync_users:
+        if str(interaction.user.id) not in self.config.developer_discord_sync_users:
             await self.send_error(interaction, ["❌ Action not authorized"], ephemeral=True)
             return
 

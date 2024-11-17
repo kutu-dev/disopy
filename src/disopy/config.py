@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 import tomlkit
-from tomlkit import TOMLDocument, comment, document, item, nl, table
+from tomlkit import comment, document, item, nl, table
 
 from . import APP_NAME, APP_NAME_LOWER
 
@@ -24,7 +24,7 @@ class Config:
     Attributes:
         version: The version of the config file.
         volume: The base volume the playback should have.
-        
+
 
         subsonic_url: The URL of the OpenSubsonic REST API.
         use_https: Whether to verify the server's certificate.
@@ -36,13 +36,13 @@ class Config:
 
     version: int
     volume: int
-    
+
     subsonic_url: str
     use_https: bool
     subsonic_user: str
 
     developer_discord_sync_guild: int | None
-    developer_discord_sync_users: list[int]
+    developer_discord_sync_users: list[str]
 
 
 def get_config_file_path(config_path: Path) -> Path:
@@ -162,7 +162,7 @@ def get_config(config_path: Path) -> Config | None:
         subsonic_user = str(config["subsonic"]["user"])
 
         developer_discord_sync_guild = None
-        developer_discord_sync_users: list[int] = []
+        developer_discord_sync_users: list[str] = []
         if "developer" in config:
             developer_discord_sync_guild = config["developer"]["discord-sync-guild"]
             developer_discord_sync_users = config["developer"]["discord-sync-users"]

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.1] - 2024-11-17
+### Changed
+- Config files in the example Docker Compose file.
+- The `/sync` command now works properly.
+- The global Command Tree sync is now done with a system aware when the program has been updated.
+- Bump up Knuckles version to fix an [issue](https://github.com/kutu-dev/disopy/issues/16) with [Funkwhale](https://www.funkwhale.audio).
+
 ## [2.2.0] - 2024-11-02
 ### Added
 - An option to disable HTTPS and fallback to HTTP.

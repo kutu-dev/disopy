@@ -12,4 +12,4 @@ services:
       - DISOPY_DISCORD_TOKEN=YOUR_DISCORD_TOKEN
 
     volumes:
-      - ./dev/config:/config
+      - /config:/config

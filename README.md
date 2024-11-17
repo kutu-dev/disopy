@@ -10,8 +10,10 @@ A Discord bot for listening music from a Subsonic server.
 
 ## Setup
 The only external dependencies needed are:
+- Python 3.13.0 or higher.
 - `ffmpeg`.
 - `libopus`.
+- `libffi-devel`.
 
 Then just install the bot from [PyPI](https://pypi.org/) with [pipx](https://github.com/pypa/pipx):
 ```sh

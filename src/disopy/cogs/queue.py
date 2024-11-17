@@ -211,11 +211,17 @@ class QueueCog(Base):
             logger.error("Unable to get the song for playback")
             return
 
+        logger.info(f"Playing song: '{song.title if song.title else "N/A"}' ({song.id})")
+
         song_path = self.options.cache_path / "subsonic/songs" / f"{song.id}.audio"
 
         if not song_path.is_file():
+            logger.info("Cache miss, downloading the song...")
+
             song_path.parent.mkdir(parents=True, exist_ok=True)
             self.subsonic.media_retrieval.download(song.id, song_path)
+        else:
+            logger.info("Cache hit")
 
         if interaction.guild is None:
             logger.warning("There is no guild attached to the interaction!")
@@ -229,8 +235,6 @@ class QueueCog(Base):
 
         voice_client.play(
             discord.FFmpegPCMAudio(str(song_path.absolute())),
-            # The ugliest Python syntax ever added to the language. The only way to do an conditional in a lambda
-            # is with ternary operator, the value it returns is meaningless
             after=lambda exception: self.play_next_callback(interaction, exception),
         )
 

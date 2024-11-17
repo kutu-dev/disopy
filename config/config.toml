@@ -6,12 +6,12 @@ volume = 100
 
 [subsonic]
 # The URL where the OpenSubsonic REST API can be accessed
-url = "https://demo.navidrome.org"
+url = "https://demo.funkwhale.audio"
 # Whether to verify the server's certificate
 use_https = false
 # The user to be use when authenticating in the OpenSubsonic server
 user = "demo"
 
 [developer]
-discord-sync-guild = 728748961426571344
-discord-sync-users = [493063130608566285]
+discord-sync-guild = "728748961426571344"
+discord-sync-users = ["493063130608566285"]
