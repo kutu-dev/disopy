@@ -10,6 +10,7 @@ from typing import Iterable, NamedTuple, cast
 
 import discord
 from discord import PCMVolumeTransformer, VoiceClient, app_commands
+import requests
 from discord.ext.commands import Bot
 from discord.interactions import Interaction
 from knuckles import Subsonic
@@ -219,7 +220,16 @@ class QueueCog(Base):
             logger.info("Cache miss, downloading the song...")
 
             song_path.parent.mkdir(parents=True, exist_ok=True)
-            self.subsonic.media_retrieval.download(song.id, song_path)
+            try:
+                raise Exception
+                self.subsonic.media_retrieval.download(song.id, song_path)
+
+            # Fix to make Disopy work with Funkwhale servers
+            except requests.exceptions.HTTPError:
+                logger.warning(
+                    "Using the /download endpoint for downloading the media failed, using /stream as a fallback"
+                )
+                self.subsonic.media_retrieval.download(song.id, song_path, use_stream=True)
         else:
             logger.info("Cache hit")
 
