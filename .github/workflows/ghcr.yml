@@ -12,7 +12,7 @@ on:
     branches:
       - master
 
-  workflow_dispatch
+  workflow_dispatch:
 
 jobs:
   docker_publish:
