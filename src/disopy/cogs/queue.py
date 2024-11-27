@@ -221,7 +221,6 @@ class QueueCog(Base):
 
             song_path.parent.mkdir(parents=True, exist_ok=True)
             try:
-                raise Exception
                 self.subsonic.media_retrieval.download(song.id, song_path)
 
             # Fix to make Disopy work with Funkwhale servers
