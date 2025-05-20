@@ -40,6 +40,9 @@ class Misc(Base):
             interaction: The interaction that started the command.
         """
 
+        # Defer immediately to avoid timeout
+        await interaction.response.defer(thinking=True)
+
         subsonic_status = "✅ Ok" if self.subsonic.system.ping().status == "ok" else "❌ Failed"
 
         await self.send_answer(
