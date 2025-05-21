@@ -56,7 +56,18 @@ class Base(Cog):
             icon_url = self.bot.user.avatar.url
 
         embed.set_author(name=f"{title}", icon_url=icon_url)
-        await interaction.response.send_message(embed=embed, ephemeral=ephemeral)
+        try:
+            await interaction.response.send_message(embed=embed, ephemeral=ephemeral)
+        except discord.InteractionResponded:
+            # Already responded, send as followup
+            await interaction.followup.send(embed=embed, ephemeral=ephemeral)
+        except Exception as e:
+            logger.error(f"Failed to send interaction response: {e}")
+            # Optionally, try followup as fallback
+            try:
+                await interaction.followup.send(embed=embed, ephemeral=ephemeral)
+            except Exception as e2:
+                logger.error(f"Failed to send followup message: {e2}")
 
     async def send_error(self, interaction: Interaction, error_content: list[str], ephemeral: bool = False) -> None:
         await self.send_answer(interaction, "Error ⚠️", error_content, ephemeral)

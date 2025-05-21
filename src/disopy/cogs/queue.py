@@ -276,6 +276,8 @@ class QueueCog(Base):
             song_name: The name of the song.
         """
 
+        await interaction.response.defer(thinking=True)
+
         # Extract the type of element to be search, taking care of the default value
         choice = what if isinstance(what, str) else what.value
 
@@ -471,6 +473,9 @@ class QueueCog(Base):
             interaction: The interaction that started the command.
             volume: The new volume level.
         """
+
+        # Defer immediately to avoid timeout
+        await interaction.response.defer(thinking=True)
 
         voice_client = await self.get_voice_client(interaction)
         if voice_client is None:
